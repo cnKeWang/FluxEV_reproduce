@@ -7,12 +7,11 @@ def ExtAndSmooth(X, s, p, d, l):
     e = f = S = [None for _ in range(n)]
     m = [None for _ in range(n - d)]
     for i in range(n):
-        e[i] = f[i] = S[i] = m[i] = None
         if i > s:
             # 计算EWMA
-            data = pd.DataFrame(X)
-            k_ewma = data.ewm(span=s - 1).mean()
-            e[i] = X[i] - k_ewma
+            df = X
+            k_ewma = df.ewm(span=s - 1).mean()
+            e[i] = df[i] - k_ewma[i]
         if i > 2 * s:
             delta_sigma = np.var(e[i - s: i]) - np.var(e[i - s: i - 1])
             f[i] = max(delta_sigma, 0)

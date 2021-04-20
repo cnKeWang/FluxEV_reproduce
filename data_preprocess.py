@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
+import csv
 
 def dataloader(data_path):
-    f = pd.read_csv(data_path)
+    df = pd.read_csv(open(data_path,'r'))
 
-    data = f[:, "origin"]
-
-
-    return data
+    timestamp = df['timestamp']
+    value = df['value']
+    return timestamp, value
