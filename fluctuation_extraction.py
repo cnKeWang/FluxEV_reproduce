@@ -1,25 +1,33 @@
 import pandas as pd
 import numpy as np
-
+from CalcEWMA import calculate
+from max_l import max_l
 
 def ExtAndSmooth(X, s, p, d, l):
     n = len(X)
-    e = f = S = [None for _ in range(n)]
-    m = [None for _ in range(n - d)]
-    for i in range(n):
-        if i > s:
-            # 计算EWMA
-            df = X
-            k_ewma = df.ewm(span=s - 1).mean()
-            e[i] = df[i] - k_ewma[i]
-        if i > 2 * s:
-            delta_sigma = np.var(e[i - s: i]) - np.var(e[i - s: i - 1])
-            f[i] = max(delta_sigma, 0)
-        if i > 2 * s + 2 * d:
-            f_period = f[i - 2 * d: i]
-            m[i - d] = max(f_period)
-        if i > 2 * s + d + l * (p - 1):
-            delta_fi = f[i] - max(m[i - l * (p - 1): i - l])
-            S[i] = max(delta_fi, 0)
+    E = [None for _ in range(s)]
+    f = [None for _ in range(2 * s)]
+    m = [None for _ in range(2 * s + d)]
 
-    return e, f, S, m
+    S = [None for _ in range(2 * s + d + l * (p - 1))]
+    data = X.tolist()
+    for i in range(n):
+        if i > s - 1:
+            # 计算EWMA
+            k_ewma = calculate(data, i, s, alpha=0.5)
+            Ei = data[i] - k_ewma
+            E.append(Ei)
+        if i > (2 * s - 1):
+            delta_sigma = np.var(E[i - s: i]) - np.var(E[i - s: i - 1])
+            fi = max(delta_sigma, 0)
+            f.append(fi)
+        if i > (2 * s + 2 * d - 1):
+            f_period = f[i - 2 * d: i]
+            m_i_d = max(f_period)
+            m.append(m_i_d)
+        if i > 2 * s + d + l * (p - 1) - 1:
+            delta_fi = f[i] - max_l(m[i - (l * (p - 1)): i - l], l, p)
+            Si = max(delta_fi, 0)
+            S.append(Si)
+
+    return E, f, S, m

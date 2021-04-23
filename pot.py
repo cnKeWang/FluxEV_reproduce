@@ -25,6 +25,7 @@ def pot(data:np.array, risk:float=1e-4, init_level:float=0.98, num_candidates:in
     '''
     # Set init threshold
     t = np.sort(data)[int(init_level * data.size)]
+    print(t)
     peaks = data[data > t] - t
 
     # Grimshaw

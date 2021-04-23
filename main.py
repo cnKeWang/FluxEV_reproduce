@@ -14,7 +14,6 @@ def SD_FluxEV(X, p, s, d, l, k, risk):
     e, f, S, m = fe.ExtAndSmooth(X, s, p, d, l)
 
     M = r = y = [None for _ in range(n)]
-    print("S:", S)
     thf, t = pot.pot(np.array((S[a + 1: a + k])), risk = risk)
     for Xt in X:
         if Xt > t:
@@ -42,12 +41,6 @@ def SD_FluxEV(X, p, s, d, l, k, risk):
 
 data_path = "../dataset/AIOps2018/decomposed/1th_ts_train.csv"
 timestamp, value = dataloader(data_path)
-X = pd.DataFrame(value)
 
 
-
-s = 240
-p = 2
-d = 120
-l = 87000
-r = SD_FluxEV(X=value, s=240, p=2, d=120, l=87000, k=12, risk=1e-4)
+r = SD_FluxEV(X=value, s=10, p=5, d=2, l=288, k=10, risk=1e-4)
