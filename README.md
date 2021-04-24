@@ -11,3 +11,7 @@ grimshaw是矩量法，返回均值和方差。是POT算法的其中一步。
 main是算法3。
 
 smooth是平滑操作()。对应算法3中的CalsFeats,这个不太确定是不是写对了。文中说是(1)-(7)式
+
+calculate计算EWMA
+
+max_l是在第二次指数平滑中，计算步长为l，p-1维向量M的最大值
