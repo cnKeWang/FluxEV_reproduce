@@ -4,8 +4,7 @@ import csv
 
 def dataloader(data_path):
     df = pd.read_csv(open(data_path,'r'))
-
     timestamp = df['timestamp']
     value = df['value']
     label = df['label']
-    return timestamp, value, label
+    return value

@@ -2,15 +2,15 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from data_preprocess import dataloader
 import numpy as np
-from fluctuation_extraction import ExtAndSmooth
-
-data_path = "../dataset/AIOps2018/decomposed/1th_ts_train.csv"
-timestamp, value, label = dataloader(data_path)
-E, f, S, m = ExtAndSmooth(value, s=10, p=5, d=2, l=288)
+from extandsmooth.fluctuation_extraction import ExtAndSmooth
 
 
-def stl_visualization(X):
+def firstdemo(X):
     length = len(X)
+    #提取和平滑
+    E, f, m, S = ExtAndSmooth(X, s=10, p=5, d=2, l=288)
+
+    #画图
     fig = make_subplots(rows=5, cols=1,
                         shared_xaxes=True)
     fig.add_trace(go.Scatter(
@@ -45,4 +45,10 @@ def stl_visualization(X):
         row=5, col=1)
     fig.show()
 
-stl_visualization(X=value)
+
+#数据路径
+data_path = "../dataset/AIOps2018/decomposed/1th_ts_train.csv"
+#读取数据
+value = dataloader(data_path)
+
+firstdemo(value)

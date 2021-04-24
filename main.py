@@ -1,10 +1,9 @@
-import fluctuation_extraction as fe
-import pot
-import grimshaw
+import extandsmooth.fluctuation_extraction as fe
+from POT import pot, grimshaw
+from extandsmooth import smooth
 import numpy as np
 from data_preprocess import dataloader
 import pandas as pd
-import smooth
 
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
@@ -14,7 +13,7 @@ def SD_FluxEV(X, p, s, d, l, k, risk):
     n = len(X)
     nt = 0
     a = 2 * s + d + l * (p - 1)
-    E, f, S, m = fe.ExtAndSmooth(X, s, p, d, l)
+    E, f, m, S = fe.ExtAndSmooth(X, s, p, d, l)
 
     r = [None for _ in range(n)]
 
@@ -43,7 +42,7 @@ def SD_FluxEV(X, p, s, d, l, k, risk):
 
 
 data_path = "../dataset/AIOps2018/decomposed/1th_ts_train.csv"
-timestamp, value, label = dataloader(data_path)
+value = dataloader(data_path)
 r = SD_FluxEV(X=value, s=10, p=5, d=2, l=288, k=120, risk=1e-4)
 
 fig = make_subplots(rows = 1, cols = 1)
