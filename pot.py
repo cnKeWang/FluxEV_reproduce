@@ -4,7 +4,7 @@ from math import log
 import grimshaw
 
 
-def pot(data:np.array, risk:float=1e-4, init_level:float=0.98, num_candidates:int=10, epsilon:float=1e-8) -> float:
+def pot(data:np.array, risk:float=1e-4, init_level:float=0.3, num_candidates:int=10, epsilon:float=1e-8) -> float:
     ''' Peak-over-Threshold Alogrithm
 
     References: 
@@ -25,9 +25,8 @@ def pot(data:np.array, risk:float=1e-4, init_level:float=0.98, num_candidates:in
     '''
     # Set init threshold
     t = np.sort(data)[int(init_level * data.size)]
-    print(t)
-    peaks = data[data > t] - t
 
+    peaks = data[data > t] - t
     # Grimshaw
     gamma, sigma = grimshaw.grimshaw(peaks=peaks,
                             threshold=t,
@@ -42,5 +41,5 @@ def pot(data:np.array, risk:float=1e-4, init_level:float=0.98, num_candidates:in
     else: 
         thf = t - sigma * log(r)
 
-    return thf, t
+    return thf, t, peaks
     

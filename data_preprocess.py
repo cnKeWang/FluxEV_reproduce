@@ -7,4 +7,5 @@ def dataloader(data_path):
 
     timestamp = df['timestamp']
     value = df['value']
-    return timestamp, value
+    label = df['label']
+    return timestamp, value, label
