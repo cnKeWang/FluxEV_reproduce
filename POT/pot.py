@@ -1,10 +1,10 @@
 import numpy as np 
 
 from math import log
-import grimshaw
+from POT import grimshaw
+from POT import mom
 
-
-def pot(data:np.array, risk:float=1e-4, init_level:float=0.3, num_candidates:int=10, epsilon:float=1e-8) -> float:
+def pot(data:np.array, risk:float=3e-3, init_level:float=0.98, num_candidates:int=120, epsilon:float=1e-8) -> float:
     ''' Peak-over-Threshold Alogrithm
 
     References: 
@@ -25,14 +25,12 @@ def pot(data:np.array, risk:float=1e-4, init_level:float=0.3, num_candidates:int
     '''
     # Set init threshold
     t = np.sort(data)[int(init_level * data.size)]
-
     peaks = data[data > t] - t
+
     # Grimshaw
-    gamma, sigma = grimshaw.grimshaw(peaks=peaks,
-                            threshold=t,
-                            num_candidates=num_candidates,
-                            epsilon=epsilon
-                            )
+    gamma, sigma = grimshaw.grimshaw(peaks = peaks,
+                                     threshold=t,
+                                     num_candidates=peaks.size)
 
     # Calculate Threshold
     r = data.size * risk / peaks.size

@@ -5,7 +5,7 @@ from max_l import max_l
 
 def ExtAndSmooth(X, s, p, d, l):
     '''
-
+    波动提取和两步平滑
     :param X: Time series data
     :param s: window sizes
     :param p: p period
@@ -28,7 +28,7 @@ def ExtAndSmooth(X, s, p, d, l):
     for i in range(n):
         if i > s - 1:
             # 计算EWMA
-            k_ewma = calculate(data, i, s, alpha=0.5)
+            k_ewma = calculate(data, i, s, alpha=0.1)
             Ei = data[i] - k_ewma
             E.append(Ei)
         if i > (2 * s - 1):

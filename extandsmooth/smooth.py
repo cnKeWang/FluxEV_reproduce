@@ -1,11 +1,16 @@
 import pandas as pd
 import numpy as np
-from CalcEWMA import calculate
+from extandsmooth.CalcEWMA import calculate
 from max_l import max_l
 
 def calfeats(X, E, f, m, S, s, i, d, l, p):
+    '''
+
+
+    对X进行平滑操作
+    '''
     data = X.tolist()
-    k_ewma = calculate(data, i, s, alpha=0.5)
+    k_ewma = calculate(data, i, s, alpha=0.1)
     E[i] = X[i] - k_ewma
     delta_sigma = np.var(E[i - s: i]) - np.var(E[i - s: i - 1])
 
