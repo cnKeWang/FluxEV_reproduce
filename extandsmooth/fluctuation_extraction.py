@@ -19,29 +19,29 @@ def ExtAndSmooth(X, s, p, d, l):
     '''
 
     n = len(X)
-    E = [None for _ in range(s)]
-    f = [None for _ in range(2 * s)]
-    m = [None for _ in range(2 * s + d)]
+    E = [None for _ in range(n)]
+    f = [None for _ in range(n)]
+    m = [None for _ in range(n - d)]
 
-    S = [None for _ in range(2 * s + d + l * (p - 1))]
+    S = [None for _ in range(n)]
     data = X.tolist()
     for i in range(n):
         if i > s - 1:
             # 计算EWMA
-            k_ewma = calculate(data, i, s, alpha=0.1)
-            Ei = data[i] - k_ewma
-            E.append(Ei)
+            k_ewma = calculate(data, i, s, alpha=0.4)
+            E[i] = data[i] - k_ewma
+
         if i > (2 * s - 1):
-            delta_sigma = np.var(E[i - s: i]) - np.var(E[i - s: i - 1])
-            fi = max(delta_sigma, 0)
-            f.append(fi)
+            delta_sigma = np.var(E[i - s: i + 1]) - np.var(E[i - s: i])
+            f[i] = max(delta_sigma, 0)
+
         if i > (2 * s + 2 * d - 1):
-            f_period = f[i - 2 * d: i]
-            m_i_d = max(f_period)
-            m.append(m_i_d)
+            f_period = f[i - 2 * d: i + 1]
+            m[i - d] = max(f_period)
+
         if i > 2 * s + d + l * (p - 1) - 1:
-            delta_fi = f[i] - max_l(m[i - (l * (p - 1)): i - l], l, p)
-            Si = max(delta_fi, 0)
-            S.append(Si)
+            delta_fi = f[i] - max_l(m[i - (l * (p - 1)): i - l + 1], l, p)
+            S[i] = max(delta_fi, 0)
+
 
     return E, f, m, S

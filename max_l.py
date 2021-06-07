@@ -1,7 +1,7 @@
 
 def max_l(X, l, p):
     maxm = []
-    for j in range(0, (p - 1) * l , l):
-        k = int(j / l)
-        maxm.append(X[k])
+    n = len(X)
+    for j in range(0, n, l):
+        maxm.append(X[j])
     return max(maxm)

@@ -23,25 +23,25 @@ def firstdemo(X):
         x=np.arange(0, length),
         y=E,
         mode='lines',
-        name='(a)', marker={"line": {"color": "red"}}),
+        name='E', marker={"line": {"color": "red"}}),
         row=2, col=1)
     fig.add_trace(go.Scatter(
         x=np.arange(0, length),
         y=f,
         mode='lines',
-        name='(b)', marker={"line": {"color": "green"}}),
+        name='f', marker={"line": {"color": "green"}}),
         row=3, col=1)
     fig.add_trace(go.Scatter(
         x=np.arange(0, length),
         y=m,
         mode='lines',
-        name='(c)', marker={"line": {"color": "black"}}),
+        name='m', marker={"line": {"color": "black"}}),
         row=4, col=1)
     fig.add_trace(go.Scatter(
         x=np.arange(0, length),
         y=S,
         mode='lines',
-        name='(d)', marker={"line": {"color": "yellow"}}),
+        name='S', marker={"line": {"color": "yellow"}}),
         row=5, col=1)
     fig.show()
 
@@ -49,6 +49,6 @@ def firstdemo(X):
 #数据路径
 data_path = "../dataset/AIOps2018/decomposed/1th_ts_train.csv"
 #读取数据
-value = dataloader(data_path)
+value, label = dataloader(data_path)
 
 firstdemo(value)

@@ -5,14 +5,14 @@
       <paths name="KW服务器">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/study/FluxEV复现" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
       <paths name="KeWang@211.71.76.44:22">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/study" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
