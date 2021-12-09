@@ -1,4 +1,5 @@
 # FluxEV_reproduce
+demo只是对数据做了两步平滑操作的可视化
 
 fluctuation_extraction.py 和smooth.py都是两步平滑，没有本质区别，一个是对初始阈值
 用到的数据做平滑，另一个是后面所有数据更新动态阈值做平滑。参考算法3
